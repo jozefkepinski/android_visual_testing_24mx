@@ -3,8 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
-  "keywords": [],
+  "scripts": {
+    "test": "playwright test --trace on",
+    "report": "npx playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "mobile",
+    "automation",
+    "android"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
