@@ -26,34 +26,41 @@ test('Add product to basket', async () => {
         await page.getByRole('button',{name:"OK"}).click()
     await page.getByRole('img', {name:'Kaski MX'}).click()
     page.waitForLoadState('domcontentloaded')
-    await page.getByRole('img',{name:"Kask Cross Raven Airborne Evo Czarny"}).click()
-    // await device.scroll("android.view.View","down",50)
+    // await page.getByRole('img',{name:"Kask Cross Raven Airborne Evo Czarny"}).click()
+    page.click("(//img[@title='Kask Cross Raven Airborne Evo Czarny'])[1]");
     await device.shell('input swipe 10 800 10 10');
-    //await device.input.swipe({x:1, y:1},[{ x: 1, y:10 },{ x: 1, y: 80}],2)
     await page.screenshot({path:'tests/screenshots/' + 'debug.png'});
     await page.click("//div[@class='m-select__display']");
     await page.click("(//div[@class='a-product-variation'])[3]");
     await page.click(".m-button.m-button--purchase.qa-pdp-add-to-cart-btn.m-button--md");
-    //await page.waitForTimeout(5000);
     page.waitForLoadState('domcontentloaded')
     await page.click("//a[contains(text(),'Przejdź do kasy')]");
     await page.waitForLoadState('domcontentloaded');
     await page.waitForSelector("//div[@class='m-checkout-box m-checkout-box--delivery']//div[@class='m-checkout-box__heading']");
-    // await Promise.all([
-    //     expect(page).toHaveScreenshot('/screenshots/koszyk.png', {clip: {x:0, y:0, height:224, width:514}})
-    // ])
+    await Promise.all([
+        expect(page).toHaveScreenshot('/screenshots/koszyk.png', {clip: {x:0, y:0, height:224, width:514}})
+    ])
     // Go to basket
-    //await page.waitForTimeout(5000);
-    page.waitForLoadState('domcontentloaded')
+    page.waitForLoadState()
     await page.click("//div[@class='m-header-button m-header-button--icon qa-mobile-header-cart']//fa-icon[@class='ng-fa-icon']//*[name()='svg']");
     // Proceed to checkout
-    page.waitForLoadState('domcontentloaded')
-    await page.click("//button[@class='m-button m-button--purchase m-button--minicart qa-proceed-to-checkout-button']")
+    console.log('Proceed to checkout')
+    page.waitForLoadState()
+    // await page.click("//button[@class='m-button m-button--purchase m-button--minicart qa-proceed-to-checkout-button']")
+    await page.click("(//span[contains(text(),'Przejdź do kasy')])[1]");
+    console.log("Clicked Button: Przejdz do kasy")
     // check address and contact details
+    console.log('Check address and contact details')
+    page.waitForLoadState()
     await device.shell('input swipe 10 1000 10 10');
-    page.waitForLoadState('domcontentloaded')
+    page.waitForLoadState()
     await expect(page.getByRole('heading', {name:'1. Wybierz opcję dostawy'})).toBeVisible();
-    //await expect(page.getByLabel('Twój adres email')).toBeVisible();
+    console.log('Checking: 1. Wybierz opcję dostawy')
+    await expect(page.getByRole('heading', {name:'2. Wybierz metodę płatności'})).toBeVisible();
+    console.log('Checking: 2. Wybierz metodę płatności')
+    await device.shell('input swipe 10 1000 10 10');
+    await expect(page.getByRole('heading', {name:'3. Wprowadź swój adres i dane kontaktowe'})).toBeVisible();
+    console.log('Checking: 3. Wprowadź swój adres i dane kontaktowe')
     
 });
 
