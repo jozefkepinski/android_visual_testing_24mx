@@ -13,6 +13,9 @@ export class TwentyFourMxPage {
     readonly checkout = this.page.locator("//a[contains(text(),'Przejdź do kasy')]")
     readonly basket = this.page.locator("//div[@class='m-header-button m-header-button--icon qa-mobile-header-cart']//fa-icon[@class='ng-fa-icon']//*[name()='svg']")
     readonly cashbox =  this.page.locator("(//span[contains(text(),'Przejdź do kasy')])[1]")
+    readonly editButton = this.page.locator("(//button[@class='m-button m-button__product-edit m-button--xs m-button--xs--square m-button--navigation--outline qa-edit-remove-btn ng-star-inserted'])[1]")
+    readonly removeButton = this.page.locator("//span[contains(text(),'Usuń')]")
+    readonly emptyBasket = this.page.locator('//html/body/app-root/p-header/header/div[1]/div[1]/div/p-header-minicart/p-header-minicart-mobile/div/div/div[1]/div/div/div/div[1]')
 
     async goto() {
         await this.page.goto('https://www.24mx.pl/');
@@ -109,5 +112,18 @@ export class TwentyFourMxPage {
         await this.device.shell('input swipe 10 1000 10 10');
         await expect(this.page.getByRole('heading', {name:'3. Wprowadź swój adres i dane kontaktowe'})).toBeVisible();
         console.log('Checking: 3. Wprowadź swój adres i dane kontaktowe')
+    }
+
+    async removeFromBasket(){
+        await this.editButton.click()
+        console.log("Clicked Button: Edytuj")
+        this.page.waitForLoadState()
+        await this.removeButton.click()
+        console.log("Clicked Button: Usuń")
+    }
+
+    async checkIfBasketIsEmpty(){
+        this.emptyBasket.waitFor()
+        this.page.getByText("Twój koszyk jest pusty")
     }
 }
