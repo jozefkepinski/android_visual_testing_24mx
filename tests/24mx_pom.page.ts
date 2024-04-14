@@ -27,18 +27,6 @@ export class TwentyFourMxPage {
     }
 
     // Methods
-    async performSearch(query: string) {
-        await this.searchInput.fill(query);
-        await this.page.waitForLoadState()
-        await this.searchButton.click();
-        await this.page.waitForLoadState()
-    }
-
-    async waitForMainPageLoadState() {
-        await this.page.waitForSelector('//*[@id="wrapper"]/div/p-home/div[1]/div[1]/p-cms-dynamic-renderer[1]/p-cms-freestyle/div/div/div/div[1]', {state:'visible'});
-        await this.page.waitForLoadState()
-    }
-
     async compareImage(image: string, _clip?:{x: number; y: number; width: number; height: number}|undefined) {
         if(_clip)
             {
@@ -51,13 +39,6 @@ export class TwentyFourMxPage {
             await Promise.all([expect(this.page).toHaveScreenshot(image)])
         }
         this.page.waitForLoadState()
-    }
-
-    async openCategoryHelmetsCross() {
-        await this.categoryHelmets.click()
-        await this.page.waitForLoadState()
-        await this.crossHelmets.click()
-
     }
 
     async chooseHelmetbyTitle(name:string){
@@ -83,6 +64,7 @@ export class TwentyFourMxPage {
 
     async addToCartAndCheckout(){
         await this.addToCart.click()
+        await this.page.waitForLoadState()
         await this.checkout.click()
         await this.page.waitForLoadState()
         await this.page.waitForSelector("//div[@class='m-checkout-box m-checkout-box--delivery']//div[@class='m-checkout-box__heading']", {state:'visible'});

@@ -27,7 +27,6 @@ test('Add product to basket', async () => {
     twentyFourMxPage.goToBasket()
     twentyFourMxPage.goToCashBox()
     twentyFourMxPage.check_address_and_contact_details()
-    
 });
 
 test('Remove product from basket', async () => {
@@ -50,8 +49,10 @@ test('Remove product from basket', async () => {
     await twentyFourMxPage.chooseHelmetbyTitle("Kask Cross Raven Airborne Evo Czarny")
     await twentyFourMxPage.chooseHelmetSize('M')
     await twentyFourMxPage.addToCartAndCheckout()
-    await percySnapshot(page, 'android_koszyk.png');
+    await percySnapshot(page, 'android_pusty_koszyk.png');
     await twentyFourMxPage.compareImage('/screenshots/koszyk.png', {x:0, y:0, height:224, width:514})
     twentyFourMxPage.goToBasket()
+    twentyFourMxPage.removeFromBasket()
+    twentyFourMxPage.checkIfBasketIsEmpty()
 });
 
