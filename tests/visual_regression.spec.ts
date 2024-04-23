@@ -1,5 +1,5 @@
 import { _android as android } from "playwright";
-import {test, expect, _android}   from "@playwright/test";
+import {test, _android}   from "@playwright/test";
 import { TwentyFourMxPage } from './24mx_pom.page';
 
 const percySnapshot = require('@percy/playwright');
